@@ -28,7 +28,7 @@ Test the connection "Test Connection"
 create a copyfile.yml on Ansible under /opt/playbooks
 
 ```sh 
-# copywarfile.yml
+# copyfile.yml
 ---
 - hosts: all 
   become: true
@@ -63,10 +63,10 @@ Create *Jenkins job*, Fill the following details,
 		
 Execute job and you should be able to seen build has been deployed on Tomcat server. 
 
-		
-##### There are error while build job (unstable).. permission issue ..so remove it by this command
+There are error while build job (unstable).. permission issue ..so remove it by this command
 To change directory permission for "ansadmin" :
-                           su - ansadmin
+                           su - ansadmin 
+			   
                            sudo chown -R ansadmin:ansadmin /opt/playbooks/
 
 
