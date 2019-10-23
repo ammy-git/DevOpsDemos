@@ -25,7 +25,7 @@ Test the connection "Test Connection"
 
 ### Part-02 - Execute job to connect 
 
-create a copywarfile.yml on Ansible under /opt/playbooks
+create a copyfile.yml on Ansible under /opt/playbooks
 
 ```sh 
 # copywarfile.yml
@@ -34,9 +34,9 @@ create a copywarfile.yml on Ansible under /opt/playbooks
   become: true
   tasks: 
     - name: copy jar/war onto tomcat servers
-        copy:
-          src: /op/playbooks/wabapp/target/webapp.war
-          dest: /opt/apache-tomcat-8.5.32/webapps
+      copy:
+        src: /opt/playbooks/webapp/target/webapp.war
+        dest: /opt/apache-tomcat-8.5.32/webapps
 ```
 Add tomcat server details  to /etc/ansible/hosts (if you are using other hosts file update server info there)
 ```sh
@@ -59,8 +59,16 @@ Create *Jenkins job*, Fill the following details,
 - *Add post-build steps*
     - Send files or execute commands over ssH
       - SSH Server : `ansible_server`
-      - Exec command ansible-playbook /opt/playbooks/copywarfile.yml
+      - Exec command ansible-playbook /opt/playbooks/copyfile.yml
 		
 Execute job and you should be able to seen build has been deployed on Tomcat server. 
 
 		
+##### There are error while build job (unstable).. permission issue ..so remove it by this command
+To change directory permission for "ansadmin" :
+                           su - ansadmin
+                           sudo chown -R ansadmin:ansadmin /opt/playbooks/
+
+
+That will give "ansadmin" the ability to create folders and place files etc...
+This should take care of any problem around "Failing to mkdir" or "Permission Denied" or "Ansible can not find or access directory" . It is literally a permission to edit directory for ansadmin
